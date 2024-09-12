@@ -1,6 +1,11 @@
+using NLog;
+using NLog.Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var Logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 // Add services to the container.
+try { 
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,3 +26,15 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+}
+
+
+catch(Exception ex)
+{
+    Logger.Error(ex, "Stopped program because of excertion");
+}
+finally
+{ 
+    LogManager.Shutdown();
+}
