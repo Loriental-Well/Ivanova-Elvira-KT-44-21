@@ -4,8 +4,12 @@ using NLog.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 var Logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-// Add services to the container.
+
 try { 
+
+builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
+// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
